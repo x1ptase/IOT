@@ -1,0 +1,9 @@
+- Arduino UNO — bộ điều khiển trung tâm.
+- HC-05 (Bluetooth module) — giao tiếp không dây với smartphone.
+- LED Matrix 8x32 (màu xanh) — hiển thị chữ và hiệu ứng (thường điều khiển bằng chip MAX7219 / thư viện MD_Parola).
+- DS1307 (RTC) — đồng hồ thời gian thực.
+- LM35 — cảm biến nhiệt độ analog.
+- LM393 — module cảm biến âm thanh (digital/analog tùy module).
+- EEPROM — dùng EEPROM tích hợp trên Arduino hoặc IC EEPROM ngoài để lưu cấu hình.
+- Smartphone — thiết bị điều khiển và nhận cảnh báo qua Bluetooth.
+- Nguồn cấp ổn định 5V (adapter hoặc module ổn áp) — khuyến nghị khi sử dụng LED Matrix để tránh sụt áp khi cấp từ USB.
