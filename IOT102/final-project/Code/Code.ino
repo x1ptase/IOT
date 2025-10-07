@@ -20,10 +20,10 @@ SoftwareSerial bluetooth(BT_RX, BT_TX);
 RTC_DS1307 rtc;
 MD_Parola matrix=MD_Parola(HARDWARE_TYPE, DATA_PIN, CLK_PIN, CS_PIN, MAX_DEVICES);
 
-String receivedData = "";
-bool showTime = true, showTemperature = false, showDate = false;
-String customMessage = "";
-int directionRun = 1;
+String receivedData="";
+bool showTime=true, showTemperature=false, showDate=false;
+String customMessage="";
+int directionRun=1;
 
 // EEPROM addresses
 #define EEPROM_MODE_ADDR 0       // EEPROM Address to store mode
@@ -31,12 +31,12 @@ int directionRun = 1;
 #define EEPROM_DIR_ADDR 2
 #define MAX_MSG_LENGTH 50        // Max length of message
 
-void setup() {
+void setup(){
   Serial.begin(9600);
   bluetooth.begin(9600);
 
-  if (!rtc.begin())
-    if (!rtc.isrunning()) {
+  if(!rtc.begin())
+    if(!rtc.isrunning()){
       rtc.adjust(DateTime(F(__DATE__), F(__TIME__)));
     }
 
@@ -48,23 +48,23 @@ void setup() {
   loadModeFromEEPROM();
 }
 
-void loop() {
-  while (bluetooth.available()) {
-    char c = bluetooth.read();
-    if (c == '\n') {
-      receivedData = "";
-    } else {
+void loop(){
+  while(bluetooth.available()){
+    char c=bluetooth.read();
+    if(c == '\n'){
+      receivedData="";
+    } else{
       receivedData += c;
       processCommand(receivedData);
     }
   }
 
-  receivedData = "";
+  receivedData="";
 
-  if (showTime) displayTime();
-  if (showTemperature) displayTemperature();
-  if (showDate) displayDate();
-  if (customMessage != "") displayCustomMessage();
+  if(showTime) displayTime();
+  if(showTemperature) displayTemperature();
+  if(showDate) displayDate();
+  if(customMessage != "") displayCustomMessage();
 }
 
 // ===========================
