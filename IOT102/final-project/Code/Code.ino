@@ -110,103 +110,110 @@ void processCommand(String command){
     int receivedMin=min.toInt();
 
     // Check if the received time is different from the current RTC time
-    if (now.hour() != receivedHour || now.minute() != receivedMin) {
+    if(now.hour() != receivedHour || now.minute() != receivedMin) {
       rtc.adjust(DateTime(now.year(), now.month(), now.day(), receivedHour, receivedMin, 0));
       Serial.println("RTC Updated!");
       bluetooth.println("RTC Updated!");
-    } else {
+    } else{
       Serial.println("RTC Already Correct!");
       bluetooth.println("RTC Already Correct!");
     }
 
-    customMessage = "";
+    customMessage="";
     saveModeToEEPROM(4, customMessage);
-  } else if (command == "MODE5") {
-    showTime = false;
-    showTemperature = false;
-    showDate = true;
-    customMessage = "";
+  } else if(command == "MODE5"){
+    showTime=false;
+    showTemperature=false;
+    showDate=true;
+    customMessage="";
     saveModeToEEPROM(5, customMessage);
   }
-  else if (command.indexOf("MODES") != -1) {
-    int index = command.indexOf("MODES") + 5;
-    directionRun = command.substring(index, index + 1).toInt();
+  else if(command.indexOf("MODES") != -1){
+    int index=command.indexOf("MODES")+5;
+    directionRun=command.substring(index, index + 1).toInt();
   }
 }
+
 
 // ===========================
 // Function to display time
 // ===========================
-void displayTime() {
-  static unsigned long lastSent = 0;
-  unsigned long nowMillis = millis();
+void displayTime(){
+  static unsigned long lastSent=0;
+  unsigned long nowMillis=millis();
 
-  if (nowMillis - lastSent >= 1000) {
-    lastSent = nowMillis;
+  if(nowMillis - lastSent >= 1000) {
+    lastSent=nowMillis;
 
-    DateTime now = rtc.now();
+    DateTime now=rtc.now();
     char timeStr[9];
     sprintf(timeStr, "%02d:%02d", now.hour(), now.minute());
 
     displayText(timeStr);
-    while (!matrix.displayAnimate()) {}
+    while(!matrix.displayAnimate()) {}
   }
 }
+
 
 // ===========================
 // Function to display temperature
 // ===========================
-void displayTemperature() {
-  int analogValue = analogRead(LM35_PIN);
-  float voltage = analogValue * (5.0 / 1023.0);
-  int temp = voltage * 100;
+void displayTemperature(){
+  int analogValue=analogRead(LM35_PIN);
+  float voltage=analogValue*(5.0 / 1023.0);
+  int temp=voltage*100;
 
   char temperatureStr[16];
   snprintf(temperatureStr, sizeof(temperatureStr), "T:%dC", temp);
 
   displayText(temperatureStr);
-  while (!matrix.displayAnimate()) {}
+  while(!matrix.displayAnimate()){
+  }
   delay(3000);
 }
+
 
 // ===========================
 // Function to display message
 // ===========================
-void displayCustomMessage() {
+void displayCustomMessage(){
   matrix.displayClear();
 
-  if (directionRun == 5) {
+  if(directionRun == 5){
     matrix.setTextAlignment(PA_CENTER);
     matrix.print(customMessage.c_str());
-  } else {
+  } else{
     matrix.displayText(customMessage.c_str(), PA_CENTER, 80, 0, getScrollEffect(), getScrollEffect());
-    while (!matrix.displayAnimate()) {}
+    while(!matrix.displayAnimate()){
+    }
   }
   delay(3000);
 }
+
 
 // ===========================
 // Function to display date
 // ===========================
-void displayDate() {
-  static unsigned long lastSent = 0;
-  unsigned long nowMillis = millis();
+void displayDate(){
+  static unsigned long lastSent=0;
+  unsigned long nowMillis=millis();
 
-  if (nowMillis - lastSent >= 1000) {
-    lastSent = nowMillis;
+  if(nowMillis - lastSent >= 1000){
+    lastSent=nowMillis;
 
-    DateTime now = rtc.now();
+    DateTime now=rtc.now();
     char dateStr[16];
     sprintf(dateStr, "%02d/%02d", now.day(), now.month());
 
     displayText(dateStr);
-    while (!matrix.displayAnimate()) {}
+    while(!matrix.displayAnimate()){
+    }
   }
   delay(3000);
 }
 
-textEffect_t getScrollEffect() {
-  switch (directionRun) {
+textEffect_t getScrollEffect(){
+  switch(directionRun){
     case 1: return PA_SCROLL_LEFT;
     case 2: return PA_SCROLL_RIGHT;
     case 3: return PA_SCROLL_UP;
@@ -216,44 +223,48 @@ textEffect_t getScrollEffect() {
   }
 }
 
-void displayText(String text) {
+
+void displayText(String text){
   matrix.displayClear();
 
-  if (directionRun == 5) {
+  if(directionRun == 5){
     matrix.setTextAlignment(PA_CENTER);
     matrix.print(text.c_str());
-  } else {
+  } else{
     matrix.displayText(text.c_str(), PA_CENTER, 80, 0, getScrollEffect(), getScrollEffect());
-    while (!matrix.displayAnimate()) {}
+    while(!matrix.displayAnimate()){
+    }
   }
 }
+
 
 // ===========================
 // Function to save mode & message to EEPROM
 // ===========================
-void saveModeToEEPROM(int mode, String message) {
+void saveModeToEEPROM(int mode, String message){
   EEPROM.write(EEPROM_MODE_ADDR, mode);
-  for (int i = 0; i < MAX_MSG_LENGTH; i++) {
+  for(int i=0; i < MAX_MSG_LENGTH; i++){
     EEPROM.write(EEPROM_MSG_ADDR + i, i < message.length() ? message[i] : '\0');
   }
   EEPROM.write(EEPROM_DIR_ADDR, directionRun);
 }
 
+
 // ===========================
 // Function to load mode & message from EEPROM
 // ===========================
-void loadModeFromEEPROM() {
-  int mode = EEPROM.read(EEPROM_MODE_ADDR);
+void loadModeFromEEPROM(){
+  int mode=EEPROM.read(EEPROM_MODE_ADDR);
   char message[MAX_MSG_LENGTH];
-  for (int i = 0; i < MAX_MSG_LENGTH; i++) {
-    message[i] = EEPROM.read(EEPROM_MSG_ADDR + i);
+  for(int i=0; i < MAX_MSG_LENGTH; i++) {
+    message[i]=EEPROM.read(EEPROM_MSG_ADDR + i);
   }
-  message[MAX_MSG_LENGTH - 1] = '\0';
-  customMessage = String(message);
+  message[MAX_MSG_LENGTH - 1]='\0';
+  customMessage=String(message);
 
-  directionRun = EEPROM.read(EEPROM_DIR_ADDR);
+  directionRun=EEPROM.read(EEPROM_DIR_ADDR);
 
-  showTime = (mode == 1 || mode == 4);
-  showTemperature = (mode == 2);
-  showDate = (mode == 5);
+  showTime=(mode == 1 || mode == 4);
+  showTemperature=(mode == 2);
+  showDate=(mode == 5);
 }
