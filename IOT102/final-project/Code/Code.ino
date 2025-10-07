@@ -31,6 +31,7 @@ int directionRun=1;
 #define EEPROM_DIR_ADDR 2
 #define MAX_MSG_LENGTH 50        // Max length of message
 
+
 void setup(){
   Serial.begin(9600);
   bluetooth.begin(9600);
@@ -47,6 +48,7 @@ void setup(){
   // Load mode and message from EEPROM
   loadModeFromEEPROM();
 }
+
 
 void loop(){
   while(bluetooth.available()){
@@ -67,44 +69,45 @@ void loop(){
   if(customMessage != "") displayCustomMessage();
 }
 
+
 // ===========================
 // Function to process commands
 // ===========================
-void processCommand(String command) {
-  if (command == "MODE1") {
-    showTime = true;
-    showTemperature = false;
-    showDate = false;
-    customMessage = "";
+void processCommand(String command){
+  if(command == "MODE1"){
+    showTime=true;
+    showTemperature=false;
+    showDate=false;
+    customMessage="";
     saveModeToEEPROM(1, customMessage);
-  } else if (command == "MODE2") {
-    showTime = false;
-    showTemperature = true;
-    showDate = false;
-    customMessage = "";
+  } else if(command == "MODE2"){
+    showTime=false;
+    showTemperature=true;
+    showDate=false;
+    customMessage="";
     saveModeToEEPROM(2, customMessage);
-  } else if (command.indexOf("MODE3") != -1) {
-    showTime = false;
-    showTemperature = false;
-    showDate = false;
-    int index = command.indexOf("MODE3") + 5;
-    if (index < command.length()) {
-      customMessage = command.substring(index);
+  } else if(command.indexOf("MODE3") != -1){
+    showTime=false;
+    showTemperature=false;
+    showDate=false;
+    int index=command.indexOf("MODE3")+5;
+    if(index < command.length()) {
+      customMessage=command.substring(index);
       customMessage.trim();
       saveModeToEEPROM(3, customMessage);
     }
-  } else if (command.indexOf("MODE4") != -1) {
-    showTime = true;
-    showTemperature = false;
-    showDate = false;
-    int index = command.indexOf("MODE4") + 5;
+  } else if(command.indexOf("MODE4") != -1){
+    showTime=true;
+    showTemperature=false;
+    showDate=false;
+    int index=command.indexOf("MODE4")+5;
 
-    String hour = command.substring(index, index + 2);
-    String min = command.substring(index + 3, index + 5);
+    String hour=command.substring(index, index+2);
+    String min=command.substring(index+3, index+5);
 
-    DateTime now = rtc.now();
-    int receivedHour = hour.toInt();
-    int receivedMin = min.toInt();
+    DateTime now=rtc.now();
+    int receivedHour=hour.toInt();
+    int receivedMin=min.toInt();
 
     // Check if the received time is different from the current RTC time
     if (now.hour() != receivedHour || now.minute() != receivedMin) {
