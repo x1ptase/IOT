@@ -107,6 +107,28 @@ void displayTime() {
 // =======================
 // Hiển thị nhiệt độ LM35
 // =======================
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 void displayTemperature() {
   int analogValue = analogRead(LM35_PIN);
   float voltage = analogValue * (5.0 / 1023.0);
