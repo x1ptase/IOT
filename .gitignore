@@ -1,0 +1,12 @@
+# Bỏ qua các file tạm của LaTeX (nên làm)
+*.aux
+*.log
+*.out
+*.bbl
+*.blg
+*.synctex.gz
+*.toc
+*.fls
+*.fdb_latexmk
+
+# KHÔNG bỏ qua file PDF cuối cùng
