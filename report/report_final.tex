@@ -1,33 +1,58 @@
 \documentclass[a4paper, 10pt]{article}
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
-\usepackage{graphicx} % Đã có sẵn, cần thiết cho \includegraphics
+\usepackage{lmodern}
+\usepackage{graphicx}
 \usepackage{amsmath}
 \usepackage{amssymb}
 \usepackage{booktabs}
 \usepackage{url}
 \usepackage{multirow}
-\usepackage[margin=2.5cm]{geometry}
+\usepackage{authblk} % Hỗ trợ định dạng tác giả/địa chỉ đa cấp
+\usepackage[margin=2.5cm]{geometry} % Thiết lập margin
+\usepackage{hyperref} % Tạo siêu liên kết
+\usepackage{tabularx} % Gói để chỉnh sửa bảng (dùng cột X)
+\usepackage{caption} % Xử lý chú thích hình ảnh/bảng
+
+% THIẾT LẬP BIBLATEX
+\usepackage[style=numeric-comp, sorting=none, backend=biber]{biblatex}
+\addbibresource{references.bib} % Đảm bảo file này tồn tại trong cùng thư mục
 
 % Định nghĩa tiêu đề và tác giả
 \title{\textbf{Bluetooth-Controlled 8x32 LED Matrix}}
 
-\author{
-	Truong Thao Vi$^{1}$, Le Tuan Kiet$^{1}$, Dang Hong Phuoc$^{1}$, Pham Tuan Anh$^{1}$ \\
-	\small \textit{$^{1}$FPT University, Ho Chi Minh Campus, Vietnam} \\
-	\small thaovicotntctv@gmail.com, lekiet2442005@gmail.com, dangp2660@gmail.com, anhtph911@gmail.com
+% CÁCH KHAI BÁO TÁC GIẢ TỐI GIẢN VÀ ÍT LỖI NHẤT
+\author[1]{Pham Tuan Anh}
+\author[1]{Le Tuan Kiet}
+\author[1]{Truong Thao Vi}
+\author[1]{Dang Hong Phuoc} 
+
+% Khối địa chỉ cơ quan
+\affil[1]{\small FPT University Ho Chi Minh Campus, Vietnam (FPTU HCM), Lot E2a-7, D1 Street, Saigon Hi-Tech Park, Tang Nhon Phu Ward, HCMC}
+
+% Khối email (Đã gỡ lệnh \\ để tránh lỗi \crcr trong affil)
+\affil{
+	\vspace{0.3cm}
+	\texttt{\small anhtph911@gmail.com, lekiet2442005@gmail.com} \\
+	\texttt{\small thaovicotntctv@gmail.com, dangp2660@gmail.com}
 }
 
-\date{\textit{SU25\_IOT102\_IA1904}} % Mã môn học/Ngày
+\date{} % <--- LỆNH QUAN TRỌNG ĐỂ ẨN NGÀY THÁNG NĂM
 
 \begin{document}
 	
-	\maketitle
+	\maketitle % Tạo tiêu đề và tên tác giả/địa chỉ
 	
 	% --- Abstract ---
 	\begin{abstract}
+		% ĐÃ XÓA \textbf{Abstract.} KHỎI ĐÂY - CHỈ CÒN NỘI DUNG TÓM TẮT
 		The Bluetooth-Controlled 8x32 LED Matrix project functions as a sophisticated Personal Ambient Notifier, providing a dynamic, real-time information display controlled wirelessly via a smartphone. At its core, the system utilizes an Arduino microcontroller to act as the central processing unit, integrating data from several key components. It ensures continuous environmental awareness through a DS1307 RTC (Real-Time Clock) for accurate time and date tracking, and an LM35 analog sensor for precise ambient temperature measurement. Wireless interactivity is achieved via an HC-05 Bluetooth module, enabling bi-directional data transfer for real-time remote updates of personal messages. The 8x32 LED matrix serves as the primary visual output, displaying time, temperature, and custom text efficiently, while EEPROM (Electrically Erasable Programmable Read-Only Memory) provides non-volatile storage for preserving settings and user messages even when power is off. This specialized architecture enables users to seamlessly manage and update content, positioning the project as an ideal, non-intrusive solution for personal smart environments and modern workspaces.
 	\end{abstract}
+	
+	% --- Mục lục ---
+	\newpage
+	\tableofcontents
+	\newpage
 	
 	% --- Introduction ---
 	\section{Introduction}
@@ -56,7 +81,6 @@
 	
 	\begin{figure}[htbp]
 		\centering
-		% ĐÃ CHÈN HÌNH block_diagram.png TẠI ĐÂY
 		\includegraphics[width=0.9\textwidth]{block_diagram.png}
 		\caption{Block diagram of the developed system}
 		\label{fig:block_diagram}
@@ -67,7 +91,8 @@
 	\begin{table}[htbp]
 		\centering
 		\caption{List of Components and their Functions}
-		\begin{tabular}{@{}ll@{}}
+		% Dùng tabularx để cột cuối tự động điều chỉnh và ngắt dòng
+		\begin{tabularx}{\textwidth}{@{}lX@{}}
 			\toprule
 			\textbf{Component/Peripheral Device} & \textbf{Function/Role in the System} \\
 			\midrule
@@ -79,7 +104,7 @@
 			LM35 & Measures ambient temperature for display. \\
 			Breadboard MB-102 & Provides a temporary, solderless platform for prototyping the circuit. \\
 			\bottomrule
-		\end{tabular}
+		\end{tabularx}
 		\label{tab:components}
 	\end{table}
 	
@@ -91,7 +116,6 @@
 	
 	\begin{figure}[htbp]
 		\centering
-		% ĐÃ CHÈN HÌNH flowchart.png TẠI ĐÂY
 		\includegraphics[width=0.7\textwidth]{flowchart.png}
 		\caption{Programming flowchart of the developed system}
 		\label{fig:flowchart}
@@ -109,7 +133,8 @@
 	\begin{table}[htbp]
 		\centering
 		\caption{Summary of Initial Testing Results}
-		\begin{tabular}{@{}llllc@{}}
+		% Dùng p{...} để kiểm soát độ rộng cột có nội dung dài
+		\begin{tabular}{@{}p{3.5cm}p{2.5cm}p{3.5cm}p{3cm}c@{}}
 			\toprule
 			\textbf{Feature Tested} & \textbf{Component(s)} & \textbf{Expected Result} & \textbf{Actual Result} & \textbf{Status} \\
 			\midrule
@@ -131,12 +156,11 @@
 	
 	% --- Author's Contribution ---
 	\section{Author's Contribution}
-	The project was completed through the coordinated effort of the team members as shown in Table \ref{tab:contribution}.
-	
 	\begin{table}[htbp]
 		\centering
 		\caption{Individual Tasks and Contributions}
-		\begin{tabular}{@{}lll@{}}
+		% Dùng tabularx để cột cuối tự động điều chỉnh và ngắt dòng
+		\begin{tabularx}{\textwidth}{@{}llX@{}}
 			\toprule
 			\textbf{Student ID} & \textbf{Student Name} & \textbf{Tasks Contribution} \\
 			\midrule
@@ -146,15 +170,13 @@
 			SE192861 & Pham Tuan Anh & Write report, develop the Arduino code for system functionality (25\%) \\
 			\bottomrule
 			\multicolumn{2}{r}{\textbf{Total:}} & \textbf{100\%} \\
-		\end{tabular}
+		\end{tabularx}
 		\label{tab:contribution}
 	\end{table}
+	The project was completed through the coordinated effort of the team members as shown in Table \ref{tab:contribution}.
 	
-	
-	% --- References ---
-	\section*{References}
-	\addcontentsline{toc}{section}{References}
-	
-
+	% --- References (Sử dụng BibLaTeX) ---
+	\newpage
+	\printbibliography[heading=bibintoc, title={References}]
 	
 \end{document}
