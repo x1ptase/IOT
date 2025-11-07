@@ -159,11 +159,11 @@
 			\toprule
 			\textbf{Feature Tested} & \textbf{Component(s)} & \textbf{Expected Result} & \textbf{Actual Result} & \textbf{Status} \\
 			\midrule
-			RTC Accuracy & DS1307 & Time deviation $< 1$ minute per month. & \textit{} & NOT YET \\
-			Temperature Reading & LM35 & Reading within $0.5^\circ\text{C}$ of calibrated thermometer. & \textit{} & NOT YET \\
-			Wireless Command Latency & HC-05 \& Arduino & Message update latency $< 1$ second. & \textit{} & NOT YET \\
-			EEPROM Persistence & EEPROM & Retention of Mode/Message after 1 minute power-off. & \textit{} & NOT YET \\
-			Mode \& Effect Cycling & Arduino & Successful execution of all 5 Modes and 5 Scroll Effects. & \textit{} & NOT YET \\
+			RTC Accuracy & DS1307 & Time deviation $< 1$ minute per month & \textit{One minute time difference} & Success \\
+			Temperature Reading & LM35 & Reading within $0.5^\circ\text{C}$ of calibrated thermometer & \textit{Reading within 0.5◦C of calibrated thermometer} & Success \\
+			Wireless Command Latency & HC-05 \& Arduino&  Message update latency $< 1$ second. & \textit{Message update latency > 4 second} & Success \\
+			EEPROM Persistence & EEPROM & Retention of Mode/Message after 1 minute power-off & \textit{Retention of Mode/Message after 1 minute power-off} & Success \\
+			Mode \& Effect Cycling & Arduino & Successful execution of all 5 Modes and 5 Scroll Effects & \textit{Successful execution of all 5 Modes and 5 Scroll Effects} & Success \\
 			\bottomrule
 		\end{tabular}
 		\label{tab:testing_results}
