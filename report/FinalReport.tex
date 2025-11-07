@@ -10,42 +10,36 @@
 \usepackage{multirow}
 \usepackage{authblk} % Hỗ trợ định dạng tác giả/địa chỉ đa cấp
 \usepackage[margin=2.5cm]{geometry} % Thiết lập margin
-\usepackage{hyperref} % Tạo siêu liên kết
+\usepackage[hidelinks]{hyperref} % Tạo siêu liên kết, KHÔNG CÓ VIỀN ĐỎ
 \usepackage{tabularx} % Gói để chỉnh sửa bảng (dùng cột X)
 \usepackage{caption} % Xử lý chú thích hình ảnh/bảng
+\usepackage{float} % ✅ thêm dòng này để cố định vị trí hình
 
 % THIẾT LẬP BIBLATEX
 \usepackage[style=numeric-comp, sorting=none, backend=biber]{biblatex}
 \addbibresource{references.bib} % Đảm bảo file này tồn tại trong cùng thư mục
-
 % Định nghĩa tiêu đề và tác giả
 \title{\textbf{Bluetooth-Controlled 8x32 LED Matrix}}
-
 % CÁCH KHAI BÁO TÁC GIẢ TỐI GIẢN VÀ ÍT LỖI NHẤT
 \author[1]{Pham Tuan Anh}
 \author[1]{Le Tuan Kiet}
 \author[1]{Truong Thao Vi}
 \author[1]{Dang Hong Phuoc} 
-
 % Khối địa chỉ cơ quan
-\affil[1]{\small FPT University Ho Chi Minh Campus, Vietnam (FPTU HCM), Lot E2a-7, D1 Street, Saigon Hi-Tech Park, Tang Nhon Phu Ward, HCMC}
-
+\affil[1]{\small FPT University Ho Chi Minh Campus, Vietnam, Lot E2a-7, D1 Street, Saigon Hi-Tech Park, Tang Nhon Phu Ward, HCMC}
 % Khối email (Đã gỡ lệnh \\ để tránh lỗi \crcr trong affil)
 \affil{
 	\vspace{0.3cm}
 	\texttt{\small anhtph911@gmail.com, lekiet2442005@gmail.com} \\
 	\texttt{\small thaovicotntctv@gmail.com, dangp2660@gmail.com}
 }
-
 \date{} % <--- LỆNH QUAN TRỌNG ĐỂ ẨN NGÀY THÁNG NĂM
-
 \begin{document}
 	
 	\maketitle % Tạo tiêu đề và tên tác giả/địa chỉ
 	
 	% --- Abstract ---
 	\begin{abstract}
-		% ĐÃ XÓA \textbf{Abstract.} KHỎI ĐÂY - CHỈ CÒN NỘI DUNG TÓM TẮT
 		The Bluetooth-Controlled 8x32 LED Matrix project functions as a sophisticated Personal Ambient Notifier, providing a dynamic, real-time information display controlled wirelessly via a smartphone. At its core, the system utilizes an Arduino microcontroller to act as the central processing unit, integrating data from several key components. It ensures continuous environmental awareness through a DS1307 RTC (Real-Time Clock) for accurate time and date tracking, and an LM35 analog sensor for precise ambient temperature measurement. Wireless interactivity is achieved via an HC-05 Bluetooth module, enabling bi-directional data transfer for real-time remote updates of personal messages. The 8x32 LED matrix serves as the primary visual output, displaying time, temperature, and custom text efficiently, while EEPROM (Electrically Erasable Programmable Read-Only Memory) provides non-volatile storage for preserving settings and user messages even when power is off. This specialized architecture enables users to seamlessly manage and update content, positioning the project as an ideal, non-intrusive solution for personal smart environments and modern workspaces.
 	\end{abstract}
 	
@@ -79,11 +73,10 @@
 	\end{itemize}
 	This architecture ensures the system functions as a reliable, wirelessly controlled information display for personal environments.
 	
-	\begin{figure}[htbp]
+	\begin{figure}[H]
 		\centering
-		\includegraphics[width=0.9\textwidth]{block_diagram.png}
+		\includegraphics[width=\textwidth]{block_diagram.png}
 		\caption{Block diagram of the developed system}
-		\label{fig:block_diagram}
 	\end{figure}
 	
 	\subsection{Components and peripheral devices}
@@ -111,21 +104,49 @@
 	\subsection{Software programming}
 	The software is the core logic that manages data acquisition, communication, processing, and display. This section describes the program flow.
 	
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=\textwidth]{pr_1.png}
+	\end{figure}
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=\textwidth]{pr_2.png}
+	\end{figure}
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=\textwidth]{pr_3.png}
+	\end{figure}
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=\textwidth]{pr_4.png}
+	\end{figure}
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=\textwidth]{pr_5.png}
+	\end{figure}
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=\textwidth]{pr_6.png}
+	\end{figure}
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=\textwidth]{pr_7.png}
+	\end{figure}
+	
 	\subsection{Programming flowchart}
 	The operational logic of the system is detailed in the flowchart in Fig.~\ref{fig:flowchart}. The logic incorporates initialization, continuous data reading (RTC, LM35, Bluetooth), processing, and updating the display based on the current mode and persistent settings retrieved from EEPROM.
 	
-	\begin{figure}[htbp]
+	\begin{figure}[H]
 		\centering
-		\includegraphics[width=0.7\textwidth]{flowchart.png}
+		\includegraphics[width=\textwidth]{flowchart.png}
 		\caption{Programming flowchart of the developed system}
-		\label{fig:flowchart}
 	\end{figure}
 	
 	% --- Results and Discussion ---
 	\section{Results and Discussion}
 	
 	\subsection{Prototype Implementation}
-	The Personal Ambient Notifier prototype was successfully constructed, integrating all specified hardware components onto a breadboard/PCB for final testing and deployment. The system's core functionality is organized around a highly flexible user interface. The device is programmed to operate across **5 distinct Display Modes** (Mode 1 to 5) and utilize **5 Scroll Effects** (Effects 1 to 5). **EEPROM** is used to store the last operational state (mode, effect, and the most recent custom message), ensuring system function resumes immediately following a power failure or restart. Wireless control is managed via a custom **Android application** which transmits string commands through the HC-05 Bluetooth module.
+	The Personal Ambient Notifier prototype was successfully constructed, integrating all specified hardware components onto a breadboard/PCB for final testing and deployment. The system's core functionality is organized around a highly flexible user interface. The device is programmed to operate across 5 distinct Display Modes (Mode 1 to 5) and utilize 5 Scroll Effects (Effects 1 to 5). EEPROM is used to store the last operational state (mode, effect, and the most recent custom message), ensuring system function resumes immediately following a power failure or restart. Wireless control is managed via a custom Android application which transmits string commands through the HC-05 Bluetooth module.
 	
 	\subsection{Testing Results}
 	Initial functional checks were conducted, but quantitative performance metrics are still pending, as shown in Table \ref{tab:testing_results}.
@@ -164,10 +185,10 @@
 			\toprule
 			\textbf{Student ID} & \textbf{Student Name} & \textbf{Tasks Contribution} \\
 			\midrule
-			SE190007 & Truong Thao Vi & Assemble the circuit, draw flowchart, create presentation slides (25\%) \\
-			SE190124 & Le Tuan Kiet & Assemble the circuit, develop the Arduino code for system functionality (25\%) \\
-			SE190769 & Dang Hong Phuoc & Draw block diagram, develop the Arduino code for system functionality (25\%) \\
 			SE192861 & Pham Tuan Anh & Write report, develop the Arduino code for system functionality (25\%) \\
+			SE190124 & Le Tuan Kiet & Assemble the circuit, develop the Arduino code for system functionality (25\%) \\	
+			SE190007 & Truong Thao Vi & Assemble the circuit, draw flowchart, create presentation slides (25\%) \\
+			SE190769 & Dang Hong Phuoc & Draw block diagram, develop the Arduino code for system functionality (25\%) \\
 			\bottomrule
 			\multicolumn{2}{r}{\textbf{Total:}} & \textbf{100\%} \\
 		\end{tabularx}
