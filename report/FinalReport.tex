@@ -19,10 +19,17 @@
 
 % THIẾT LẬP BIBLATEX
 \usepackage[style=numeric-comp, sorting=none, backend=biber]{biblatex}
-\addbibresource{references.bib}
-% Định nghĩa tiêu đề và tác giả
+
+\newcommand{\PreTitleText}{%
+	\begin{center}
+		\vspace*{0.5cm} % Khoảng cách từ trên cùng (hoặc Logo)
+		\Large\textbf{IOT102 Fall 2025}
+		\vspace{0.8cm} % Khoảng cách đến tiêu đề chính
+	\end{center}
+}
+
 \title{\textbf{Personal Ambient Notifier}}
-% CÁCH KHAI BÁO TÁC GIẢ TỐI GIẢN VÀ ÍT LỖI NHẤT
+
 \author[1]{Pham Tuan Anh}
 \author[1]{Le Tuan Kiet}
 \author[1]{Truong Thao Vi}
@@ -186,9 +193,22 @@
 	\section{Conclusion}
 	The Smart LED Matrix Display with Bluetooth Communication project successfully developed a Bluetooth-controlled LED matrix system for the real-time display of time, date, temperature, and custom messages. The integration of the Arduino Uno, HC-05, MAX7219, DS1307, and LM-35 achieved accurate data display and reliable wireless control. EEPROM storage ensured that user settings were retained after restarts, enhancing the system's practical usability as a non-intrusive Personal Ambient Notifier for modern environments.
 	
-	\section*{References} 
-	\nocite{*} 
-	\printbibliography[heading=none]
+	% --- References (Không đánh số và KHÔNG lặp tiêu đề) ---
+	\begin{thebibliography}{9}
+		
+		\bibitem{arduino_uno_rev3}
+		\textit{Arduino UNO R3-Technical Specifications}.
+		URL: \url{https://docs.arduino.cc/hardware/uno-rev3/}. 
+		
+		\bibitem{src_code}
+		\textit{Component source code}.
+		URL: \url{https://banlinhkien.com/}.
+		
+		\bibitem{components}
+		\textit{Refer to components}.
+		URL: \url{https://hshop.vn/}.
+		
+	\end{thebibliography}
 
 	
 	
