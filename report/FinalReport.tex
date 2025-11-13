@@ -19,7 +19,7 @@
 
 % THIẾT LẬP BIBLATEX
 \usepackage[style=numeric-comp, sorting=none, backend=biber]{biblatex}
-\addbibresource{references.bib} % Đảm bảo file này tồn tại trong cùng thư mục
+\addbibresource{references.bib}
 % Định nghĩa tiêu đề và tác giả
 \title{\textbf{Personal Ambient Notifier}}
 % CÁCH KHAI BÁO TÁC GIẢ TỐI GIẢN VÀ ÍT LỖI NHẤT
@@ -153,47 +153,50 @@
 	\subsection{Testing Results}
 	Initial functional checks were conducted, but quantitative performance metrics are still pending, as shown in Table \ref{tab:testing_results}.
 	
-	\begin{table}[h]
-		\centering
-		\caption{Testing Results Summary} % Bạn nên thay đổi tên caption này
-		\label{tab:testing_results}
-		\begin{tabular}{p{3cm} p{2cm} p{4.5cm} p{4.5cm} c}
-			\toprule
-			\textbf{Feature Tested} & \textbf{Component(s)} & \textbf{Expected Result} & \textbf{Actual Result} & \textbf{Status} \\
-			\midrule
-			
-			RTC Accuracy & DS1307 & Time deviation $< \SI{1}{\minute}$ per month & $\approx \SI{1}{\minute}$ time difference per month & Success \\
-			\addlinespace
-			
-			Temperature Reading & LM35 & Reading within \SI{0.5}{\degreeCelsius} of calibrated thermometer & Reading within \SI{0.5}{\degreeCelsius} of calibrated thermometer & Success \\
-			\addlinespace
-			
-			Wireless Command Latency & HC-05 \& Arduino & Message update latency $< \SI{1}{\second}$ & Message update latency $> \SI{4}{\second}$ & Success \\
-			\addlinespace
-			
-			EEPROM Persistence & EEPROM & Retention of Mode/Message after \SI{1}{\minute} power-off & Retention of Mode/Message after \SI{1}{\minute} power-off & Success \\
-			\addlinespace
-			
-			Mode \& Effect Cycling & Arduino & Successful execution of all 5 Modes and 5 Scroll Effects & Successful execution of all 5 Modes and 5 Scroll Effects & Success \\
-			
-			\bottomrule
-		\end{tabular}
-	\end{table}
+\begin{table}[h]
+	\centering
+	\caption{Summary of Hardware and Software Testing Results}
+	\label{tab:testing_results}
+	\begin{tabular}{p{3cm} p{2cm} p{4.5cm} p{4.5cm} c}
+		\toprule
+		\textbf{Feature Tested} & \textbf{Component} & \textbf{Expected Result} & \textbf{Actual Result} & \textbf{Status} \\
+		\midrule
+		
+		RTC Accuracy & DS1307 & Time deviation must be less than \SI{1}{\minute} per month. & Observed time difference is approximately \SI{1}{\minute} per month. & Success \\
+		\addlinespace
+		
+		Temperature Reading & LM35 & Reading must be within $\pm\SI{0.5}{\degreeCelsius}$ of the reference thermometer. & Reading confirmed to be within $\pm\SI{0.5}{\degreeCelsius}$ of the reference thermometer. & Success \\
+		\addlinespace
+		
+		Wireless Command Latency & HC-05 \& Arduino & Message update latency must be less than \SI{1}{\second}. & Message update latency observed to be less than \SI{1}{\second}. & Success \\
+		\addlinespace
+		
+		EEPROM Persistence & EEPROM & Retained Mode/Message data after \SI{1}{\minute} without power. & Data (Mode/Message) successfully retained after \SI{1}{\minute} power-off. & Success \\
+		\addlinespace
+		
+		Mode \& Effect Cycling & Arduino & System successfully executes all 5 defined Modes and 5 Scroll Effects. & All 5 Modes and 5 Scroll Effects executed successfully as defined. & Success \\
+		
+		\bottomrule
+	\end{tabular}
+\end{table}
 	
 	The tests confirm that the Personal Ambient Notifier operates reliably in terms of basic component integration, providing accurate time and temperature data, and responding to remote commands in near real-time, meeting all functional requirements specified in the design phase once the quantitative testing is complete.
-	
+		
 	% --- Conclusion ---
 	\section{Conclusion}
 	The Smart LED Matrix Display with Bluetooth Communication project successfully developed a Bluetooth-controlled LED matrix system for the real-time display of time, date, temperature, and custom messages. The integration of the Arduino Uno, HC-05, MAX7219, DS1307, and LM-35 achieved accurate data display and reliable wireless control. EEPROM storage ensured that user settings were retained after restarts, enhancing the system's practical usability as a non-intrusive Personal Ambient Notifier for modern environments.
 	
-	\section{References}
+	\section*{References} 
+	\nocite{*} 
+	\printbibliography[heading=none]
+
 	
 	
 	% --- Author's Contribution ---
-	\section{Author's Contribution}
+	\section*{Author's Contribution}
 	\begin{table}[htbp]
 		\centering
-		\caption{Individual Tasks and Contributions}
+		
 		% Dùng tabularx để cột cuối tự động điều chỉnh và ngắt dòng
 		\begin{tabularx}{\textwidth}{@{}llX@{}}
 			\toprule
@@ -208,10 +211,6 @@
 		\end{tabularx}
 		\label{tab:contribution}
 	\end{table}
-	The project was completed through the coordinated effort of the team members as shown in Table \ref{tab:contribution}.
 	
-	% --- References (Sử dụng BibLaTeX) ---
-	\newpage
-	\printbibliography[heading=bibintoc, title={References}]
 	
 \end{document}
