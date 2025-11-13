@@ -14,6 +14,8 @@
 \usepackage{tabularx} % Gói để chỉnh sửa bảng (dùng cột X)
 \usepackage{caption} % Xử lý chú thích hình ảnh/bảng
 \usepackage{float} % ✅ thêm dòng này để cố định vị trí hình
+\usepackage{booktabs} % Cần thiết cho các đường kẻ chuyên nghiệp
+\usepackage{siunitx}  % Cần thiết để định dạng đơn vị khoa học/kỹ thuật chính xác
 
 % THIẾT LẬP BIBLATEX
 \usepackage[style=numeric-comp, sorting=none, backend=biber]{biblatex}
@@ -151,22 +153,31 @@
 	\subsection{Testing Results}
 	Initial functional checks were conducted, but quantitative performance metrics are still pending, as shown in Table \ref{tab:testing_results}.
 	
-	\begin{table}[htbp]
+	\begin{table}[h]
 		\centering
-		\caption{Summary of Initial Testing Results}
-		% Dùng p{...} để kiểm soát độ rộng cột có nội dung dài
-		\begin{tabular}{@{}p{3.5cm}p{2.5cm}p{3.5cm}p{3cm}c@{}}
+		\caption{Testing Results Summary} % Bạn nên thay đổi tên caption này
+		\label{tab:testing_results}
+		\begin{tabular}{p{3cm} p{2cm} p{4.5cm} p{4.5cm} c}
 			\toprule
 			\textbf{Feature Tested} & \textbf{Component(s)} & \textbf{Expected Result} & \textbf{Actual Result} & \textbf{Status} \\
 			\midrule
-			RTC Accuracy & DS1307 & Time deviation $< 1$ minute per month & \textit{One minute time difference} & Success \\
-			Temperature Reading & LM35 & Reading within $0.5^\circ\text{C}$ of calibrated thermometer & \textit{Reading within 0.5◦C of calibrated thermometer} & Success \\
-			Wireless Command Latency & HC-05 \& Arduino&  Message update latency $< 1$ second. & \textit{Message update latency > 4 second} & Success \\
-			EEPROM Persistence & EEPROM & Retention of Mode/Message after 1 minute power-off & \textit{Retention of Mode/Message after 1 minute power-off} & Success \\
-			Mode \& Effect Cycling & Arduino & Successful execution of all 5 Modes and 5 Scroll Effects & \textit{Successful execution of all 5 Modes and 5 Scroll Effects} & Success \\
+			
+			RTC Accuracy & DS1307 & Time deviation $< \SI{1}{\minute}$ per month & $\approx \SI{1}{\minute}$ time difference per month & Success \\
+			\addlinespace
+			
+			Temperature Reading & LM35 & Reading within \SI{0.5}{\degreeCelsius} of calibrated thermometer & Reading within \SI{0.5}{\degreeCelsius} of calibrated thermometer & Success \\
+			\addlinespace
+			
+			Wireless Command Latency & HC-05 \& Arduino & Message update latency $< \SI{1}{\second}$ & Message update latency $> \SI{4}{\second}$ & Success \\
+			\addlinespace
+			
+			EEPROM Persistence & EEPROM & Retention of Mode/Message after \SI{1}{\minute} power-off & Retention of Mode/Message after \SI{1}{\minute} power-off & Success \\
+			\addlinespace
+			
+			Mode \& Effect Cycling & Arduino & Successful execution of all 5 Modes and 5 Scroll Effects & Successful execution of all 5 Modes and 5 Scroll Effects & Success \\
+			
 			\bottomrule
 		\end{tabular}
-		\label{tab:testing_results}
 	\end{table}
 	
 	The tests confirm that the Personal Ambient Notifier operates reliably in terms of basic component integration, providing accurate time and temperature data, and responding to remote commands in near real-time, meeting all functional requirements specified in the design phase once the quantitative testing is complete.
@@ -174,6 +185,9 @@
 	% --- Conclusion ---
 	\section{Conclusion}
 	The Smart LED Matrix Display with Bluetooth Communication project successfully developed a Bluetooth-controlled LED matrix system for the real-time display of time, date, temperature, and custom messages. The integration of the Arduino Uno, HC-05, MAX7219, DS1307, and LM-35 achieved accurate data display and reliable wireless control. EEPROM storage ensured that user settings were retained after restarts, enhancing the system's practical usability as a non-intrusive Personal Ambient Notifier for modern environments.
+	
+	\section{References}
+	
 	
 	% --- Author's Contribution ---
 	\section{Author's Contribution}
@@ -185,10 +199,10 @@
 			\toprule
 			\textbf{Student ID} & \textbf{Student Name} & \textbf{Tasks Contribution} \\
 			\midrule
-			SE192861 & Pham Tuan Anh & Write report, develop the Arduino code for system functionality (25\%) \\
-			SE190124 & Le Tuan Kiet & Assemble the circuit, develop the Arduino code for system functionality (25\%) \\	
-			SE190007 & Truong Thao Vi & Assemble the circuit, draw flowchart, create presentation slides (25\%) \\
-			SE190769 & Dang Hong Phuoc & Draw block diagram, develop the Arduino code for system functionality (25\%) \\
+			SE192861 & Pham Tuan Anh & Write report, develop the Arduino code for system functionality (30\%) \\
+			SE190124 & Le Tuan Kiet & Develop the Arduino code for system functionality, assemble the circuit (30\%) \\	
+			SE190007 & Truong Thao Vi & Assemble the circuit, draw the circuit schematic (25\%) \\
+			SE190769 & Dang Hong Phuoc & Draw block diagram and Flowchart, create presentation (20\%) \\
 			\bottomrule
 			\multicolumn{2}{r}{\textbf{Total:}} & \textbf{100\%} \\
 		\end{tabularx}
